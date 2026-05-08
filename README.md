@@ -122,15 +122,6 @@ python ANPR-System-main/test_photo.py path/to/image.jpg
 
 Этот проект лицензирован под MIT лицензией — смотрите файл [LICENSE](LICENSE).
 
-## 👨‍💻 Автор
-
-Создано для проекта управления парковкой.
-
-## 📞 Контакты
-
-- 📧 Email: your.email@example.com
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/parking_system/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/parking_system/discussions)
 
 ---
 
