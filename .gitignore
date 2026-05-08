@@ -1,0 +1,154 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Models (keep only a small representative set)
+*.pt
+*.pth
+*.onnx
+*.pb
+/models/*
+!/models/README.md
+
+# Large datasets
+/data/
+/datasets/
+*.zip
+*.tar.gz
+*.7z
+
+# Snapshots and temporary files
+/snapshots/
+*.tmp
+*.log
+*.cache
+*.pkl
+*.pickle
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.mdb
+
+# IDE Python template
+# Pyre type checker
+.pyre/
+
+# Node modules (if using JS tools)
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Mac
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Python coverage
+.coverage
+htmlcov/
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sphinx documentation
+docs/_build/
+
+# Testing
+.pytest_cache/
+.tox/
+nosetests.xml
+
+# Output files
+output/
+results/
+*.csv
+*.xlsx
+
+# Temporary
+temp/
+tmp/
+.tmp/
+
+# SSH Keys (NEVER commit these!)
+*.pem
+*.key
+id_rsa*
+known_hosts
+
+# Secrets and config
+secrets.json
+.secrets
+config.local.php
+db_config.local.php
