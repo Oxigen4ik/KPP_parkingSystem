@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Май 08 2026 г., 11:41
+-- Время создания: Май 25 2026 г., 08:06
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `allowed_cars` (
   `id` int(11) NOT NULL,
-  `plate_number` varchar(20) NOT NULL,
+  `plate_number` varchar(20) DEFAULT NULL,
   `owner_name` varchar(100) DEFAULT NULL,
   `is_active` tinyint(1) DEFAULT 1,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -56,7 +56,7 @@ CREATE TABLE `entry_logs` (
   `status` enum('access_granted','access_denied') NOT NULL,
   `snapshot_path` varchar(255) DEFAULT NULL,
   `event_time` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `entry_logs`
@@ -180,11 +180,11 @@ CREATE TABLE `login_attempts` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
   `role` enum('admin','guard') NOT NULL DEFAULT 'guard',
   `full_name` varchar(100) DEFAULT '',
   `is_active` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime DEFAULT current_timestamp(),
   `last_login` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -192,9 +192,9 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `role`, `full_name`, `is_active`, `created_at`, `last_login`) VALUES
-(1, 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'Администратор', 1, '2026-05-08 16:18:17', '2026-05-08 16:36:37'),
-(2, 'guard', '$2y$10$ypm2wGQhcvL7A9N4qr.i2uOPASyE4CA17qvtlH97K7vutNtcci7QG', 'guard', 'Тест Тестович', 1, '2026-05-08 16:37:37', '2026-05-08 16:38:22');
+INSERT INTO `users` (`id`, `username`, `password_hash`, `role`, `full_name`, `is_active`, `created_at`, `last_login`) VALUES
+(1, 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'Администратор', 1, '2026-05-25 12:06:56', '2026-05-25 12:44:04'),
+(2, 'guard', '$2y$10$LYGfAmJ7SgwCGT7poMQq4uzGDqqOemUFBQHhaOJ45b8M/9CEo3jSi', 'guard', 'Иванов И.И.', 1, '2026-05-25 12:09:53', '2026-05-25 12:47:37');
 
 --
 -- Индексы сохранённых таблиц

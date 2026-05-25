@@ -148,6 +148,7 @@ if (isset($_GET['delete_id'])) {
             <a href="?action=make_backup" class="btn-minimal warning"><i class="fas fa-download"></i> Бэкап</a>
             <a href="users.php" class="btn-minimal"><i class="fas fa-users"></i> Пользователи</a>
         <?php endif; ?>
+        <a href="analytics.php" class="btn-minimal"><i class="fas fa-chart-line"></i> Аналитика</a>
         <div class="time-display">
             <div class="clock" id="clock">--:--:--</div>
             <div class="date" id="date">—</div>
@@ -376,32 +377,6 @@ if (isset($_GET['delete_id'])) {
     </div>
 </div>
 
-<style>
-/* Стили для кнопок выбора срока гостевого пропуска */
-.guest-duration-btn span {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
-    border-radius: 8px;
-    border: 1px solid rgba(255,180,0,0.25);
-    background: rgba(255,180,0,0.06);
-    color: #aaa;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s;
-    user-select: none;
-}
-.guest-duration-btn input:checked + span {
-    background: rgba(255,180,0,0.2);
-    border-color: rgba(255,180,0,0.6);
-    color: #ffb400;
-}
-.guest-duration-btn span:hover {
-    border-color: rgba(255,180,0,0.5);
-    color: #ffb400;
-}
-</style>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="script.js"></script>
