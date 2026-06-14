@@ -55,7 +55,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'make_backup') {
 }
 
 if (isset($_GET['action']) && $_GET['action'] == 'get_logs') {
-    $sql = "SELECT plate_number, status, event_time, snapshot_path FROM entry_logs ORDER BY event_time DESC LIMIT 15";
+    $sql = "SELECT id, plate_number, status, event_time, snapshot_path FROM entry_logs ORDER BY event_time DESC LIMIT 15";
     $result = $conn->query($sql);
     $logs = [];
     while($row = $result->fetch_assoc()) $logs[] = $row;
@@ -163,10 +163,40 @@ if (isset($_GET['delete_id'])) {
                 <?= is_admin() ? 'admin' : 'guard' ?>
             </span>
         </div>
+        <!-- Кнопка тревоги -->
+        <button id="emergencyBtn"
+                onclick="triggerEmergency()"
+                title="Экстренная тревога"
+                style="
+                    display:inline-flex; align-items:center; gap:7px;
+                    padding:5px 14px; border-radius:8px; cursor:pointer;
+                    font-family:var(--mono); font-size:0.75rem; font-weight:700;
+                    letter-spacing:0.06em; text-transform:uppercase;
+                    border:1px solid rgba(248,81,73,0.5);
+                    background:rgba(248,81,73,0.12); color:#f85149;
+                    transition:all 0.18s;
+                "
+                onmouseover="this.style.background='rgba(248,81,73,0.25)'"
+                onmouseout="this.style.background='rgba(248,81,73,0.12)'">
+            <i class="fas fa-triangle-exclamation"></i> ТРЕВОГА
+        </button>
         <a href="logout.php" class="btn-minimal" title="Выйти"><i class="fas fa-right-from-bracket"></i></a>
         <button class="btn-minimal" onclick="location.reload()"><i class="fas fa-redo"></i></button>
     </div>
 </nav>
+<style>
+/* Состояние активной тревоги */
+.emergency-active {
+    animation: emergencyPulse 0.6s ease-in-out infinite !important;
+    background: rgba(248,81,73,0.35) !important;
+    border-color: #f85149 !important;
+    box-shadow: 0 0 20px rgba(248,81,73,0.4) !important;
+}
+@keyframes emergencyPulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:0.7; transform:scale(0.97); }
+}
+</style>
 
 <div class="main">
     <?php if ($alert_msg): 
@@ -198,7 +228,10 @@ if (isset($_GET['delete_id'])) {
         <div class="stats-bar">
             <div class="stat-item"><div class="stat-value text-accent" id="stat-total">—</div><div class="stat-label">В базе</div></div>
             <div class="stat-item"><div class="stat-value text-success" id="stat-last">—</div><div class="stat-label">Посл. въезд</div></div>
-            <div class="stat-item action" onclick="alert('Команда отправлена')"><div class="stat-value"><i class="fas fa-arrow-up"></i></div><div class="stat-label">Открыть</div></div>
+            <div class="stat-item action" id="openBarrierBtn" onclick="openBarrier()" title="Открыть шлагбаум вручную">
+                <div class="stat-value"><i class="fas fa-arrow-up"></i></div>
+                <div class="stat-label">Открыть</div>
+            </div>
         </div>
     </div>
 

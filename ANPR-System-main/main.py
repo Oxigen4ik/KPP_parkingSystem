@@ -1,9 +1,3 @@
-"""
-ANPR Barrier System — объединённый модуль
-Основа: inference.py (классы, квантованная CRNN)
-Дополнено из main.py: positional_fix, difflib-поиск, RTSP с переподключением
-"""
-
 import argparse
 import os
 import time
@@ -33,9 +27,9 @@ frame_lock   = threading.Lock()
 app          = Flask(__name__)
 
 
-# ══════════════════════════════════════════════════════════
+
 #  КОНФИГУРАЦИЯ
-# ══════════════════════════════════════════════════════════
+
 class Config:
     # Пути к моделям
     YOLO_MODEL_PATH: str = "models/yolo/best.pt"
@@ -71,9 +65,7 @@ class Config:
     FUZZY_CUTOFF: float = 0.80
 
 
-# ══════════════════════════════════════════════════════════
 #  АРХИТЕКТУРА CRNN
-# ══════════════════════════════════════════════════════════
 class CRNN(nn.Module):
     def __init__(self, num_classes: int):
         super().__init__()
@@ -97,9 +89,9 @@ class CRNN(nn.Module):
         return nn.functional.log_softmax(x, dim=2)
 
 
-# ══════════════════════════════════════════════════════════
+
 #  ДЕТЕКТОР НОМЕРНЫХ ЗНАКОВ (YOLO)
-# ══════════════════════════════════════════════════════════
+
 class YOLODetector:
     def __init__(self):
         print(f"[INFO] Загрузка YOLO: {Config.YOLO_MODEL_PATH}")
@@ -125,9 +117,9 @@ class YOLODetector:
         return results
 
 
-# ══════════════════════════════════════════════════════════
+
 #  OCR (CRNN квантованная INT8)
-# ══════════════════════════════════════════════════════════
+
 class CRNNRecognizer:
     def __init__(self):
         print(f"[INFO] Загрузка OCR (INT8): {Config.OCR_MODEL_PATH}")
@@ -179,9 +171,9 @@ class CRNNRecognizer:
         return "".join(decoded)
 
 
-# ══════════════════════════════════════════════════════════
+
 #  ПОСТОБРАБОТКА ТЕКСТА
-# ══════════════════════════════════════════════════════════
+
 
 # Таблица перевода латиница → кириллица (для записи в БД)
 _EN_TO_RU = str.maketrans("ABCEHKMOPTXY", "АВСЕНКМОРТХУ")
@@ -215,9 +207,9 @@ def positional_fix(raw: str) -> str:
     return "".join(fixed)
 
 
-# ══════════════════════════════════════════════════════════
+
 #  БАЗА ДАННЫХ
-# ══════════════════════════════════════════════════════════
+
 
 def _get_db():
     """Открывает соединение с БД. Возвращает None при ошибке."""
@@ -282,9 +274,9 @@ def log_plate_event(plate_text: str, frame: np.ndarray):
             conn.close()
 
 
-# ══════════════════════════════════════════════════════════
+
 #  КОНВЕЙЕР ОБРАБОТКИ КАДРОВ
-# ══════════════════════════════════════════════════════════
+
 class ANPRPipeline:
     def __init__(self, recognizer: CRNNRecognizer):
         self.recognizer    = recognizer
@@ -340,9 +332,9 @@ class ANPRPipeline:
                               if k in active_ids}
 
 
-# ══════════════════════════════════════════════════════════
+
 #  ОТРИСОВКА
-# ══════════════════════════════════════════════════════════
+
 def draw_results(frame: np.ndarray, results: List[Dict[str, Any]]) -> np.ndarray:
     for r in results:
         x1, y1, x2, y2 = r["bbox"]
@@ -357,9 +349,9 @@ def draw_results(frame: np.ndarray, results: List[Dict[str, Any]]) -> np.ndarray
     return frame
 
 
-# ══════════════════════════════════════════════════════════
+
 #  ПОТОК ОБРАБОТКИ ВИДЕО
-# ══════════════════════════════════════════════════════════
+
 def video_thread(source: str):
     global output_frame
 
@@ -422,9 +414,9 @@ def video_thread(source: str):
     cap.release()
 
 
-# ══════════════════════════════════════════════════════════
+
 #  FLASK — MJPEG СТРИМ
-# ══════════════════════════════════════════════════════════
+
 def _generate_mjpeg():
     while True:
         with frame_lock:
@@ -450,9 +442,9 @@ def index():
     return "ANPR Server running. Stream: <a href='/video_feed'>/video_feed</a>"
 
 
-# ══════════════════════════════════════════════════════════
+
 #  ТОЧКА ВХОДА
-# ══════════════════════════════════════════════════════════
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="ANPR Barrier System")
     parser.add_argument(
